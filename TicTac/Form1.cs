@@ -209,7 +209,7 @@ namespace TicTac
             {
                 isEasy = false;
             }
-            DialogResult dialogResult1 = MessageBox.Show("Would you like to go first", "Select Turn", MessageBoxButtons.YesNo);
+            DialogResult dialogResult1 = MessageBox.Show("Would you like to go first?", "Select Turn", MessageBoxButtons.YesNo);
 
             if (dialogResult1 == DialogResult.Yes)
             {
@@ -364,14 +364,14 @@ namespace TicTac
                     }
                     else if ((res == '0' && first == 'C') || (res == 'X' && first == 'R'))
                     {
-                        MessageBox.Show("Your opponent won!           ", "Defeat!", MessageBoxButtons.OK);
+                        MessageBox.Show("YOU LOST!           ", "Defeat!", MessageBoxButtons.OK);
                         loss++;
                         label2.Text = String.Format("{0}", loss);
                         progressBar1.Value += 20;
                     }
                     else
                     {
-                        MessageBox.Show("It's a tie!                  ", "Tie!", MessageBoxButtons.OK);
+                        MessageBox.Show("IT'S A TIE!                  ", "Tie!", MessageBoxButtons.OK);
                     }
                     resetAll();
                     if (win == 5 || loss == 5)
@@ -444,14 +444,14 @@ namespace TicTac
                         }
                         else if ((res == '0' && first == 'C') || (res == 'X' && first == 'R'))
                         {
-                            MessageBox.Show("Your opponent won!           ", "Defeat!", MessageBoxButtons.OK);
+                            MessageBox.Show("YOU LOST!           ", "Defeat!", MessageBoxButtons.OK);
                             loss++;
                             label2.Text = String.Format("{0}", loss);
                             progressBar1.Value += 20;
                         }
                         else
                         {
-                            MessageBox.Show("It's a tie!                  ", "Tie!", MessageBoxButtons.OK);
+                            MessageBox.Show("IT'S A TIE!                  ", "Tie!", MessageBoxButtons.OK);
                         }
                         resetAll();
                         if (win == 5 || loss == 5)
@@ -515,7 +515,7 @@ namespace TicTac
 
         private void Form1_MouseMove(object sender, MouseEventArgs e)
         {
-           
+
         }
 
         private void label1_Click(object sender, EventArgs e)
