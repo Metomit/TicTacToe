@@ -18,6 +18,8 @@ namespace TicTac
         public bool isEasy { get; set; }
         public char[] board = new char[9];
         public char first;
+        public int loss { get; set; }
+        public int win { get; set; }
 
         int max(int score, int bestScore)
         {
@@ -229,6 +231,8 @@ namespace TicTac
             Places.Add(new Place(new Point(100, 500)));
             Places.Add(new Place(new Point(300, 500)));
             Places.Add(new Place(new Point(500, 500)));
+            win = 0;
+            loss = 0;
             if (first == 'R')
             {
                 if (isEasy)
@@ -257,143 +261,321 @@ namespace TicTac
 
         private void Form1_Paint(object sender, PaintEventArgs e)
         {
-            Pen pn = new Pen(Color.Black, 15);
-            foreach(Shape s in XO)
+            if(win!=5 || loss!=5)
             {
-                s.DrawShape(e.Graphics);
-            }
-            e.Graphics.DrawLine(pn,new Point(200, 0), new Point(200, 600));
-            e.Graphics.DrawLine(pn, new Point(400, 0), new Point(400, 600));
-            e.Graphics.DrawLine(pn, new Point(0, 200), new Point(600, 200));
-            e.Graphics.DrawLine(pn, new Point(0, 400), new Point(600, 400));
+                Pen pn = new Pen(Color.Black, 15);
+                foreach (Shape s in XO)
+                {
+                    s.DrawShape(e.Graphics);
+                }
+                e.Graphics.DrawLine(pn, new Point(200, 0), new Point(200, 600));
+                e.Graphics.DrawLine(pn, new Point(400, 0), new Point(400, 600));
+                e.Graphics.DrawLine(pn, new Point(0, 200), new Point(600, 200));
+                e.Graphics.DrawLine(pn, new Point(0, 400), new Point(600, 400));
+            }else
+            {
+                e.Graphics.Clear(Color.White);
+            }    
+            
         }
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            int selected=0;
-            if(e.Location.X>0 && e.Location.X<200)
+            if(win==5 || loss==5)
             {
-                if (e.Location.Y > 0 && e.Location.Y < 200)
-                {
-                    selected = 0;
-                }
-                else if (e.Location.Y > 200 && e.Location.Y < 400)
-                {
-                    selected = 3;
-                }
-                else if (e.Location.Y > 400 && e.Location.Y < 600)
-                {
-                    selected = 6;
-                }
-            }
-            else if(e.Location.X > 200 && e.Location.X < 400)
+                finalWinner();
+            }else
             {
-                if (e.Location.Y > 0 && e.Location.Y < 200)
+                int selected = 0;
+                if (e.Location.X > 0 && e.Location.X < 200)
                 {
-                    selected = 1;
-                }
-                else if (e.Location.Y > 200 && e.Location.Y < 400)
-                {
-                    selected = 4;
-                }
-                else if (e.Location.Y > 400 && e.Location.Y < 600)
-                {
-                    selected = 7;
-                }
-            }
-            else if(e.Location.X > 400 && e.Location.X < 600)
-            {
-                if (e.Location.Y > 0 && e.Location.Y < 200)
-                {
-                    selected = 2;
-                }
-                else if (e.Location.Y > 200 && e.Location.Y < 400)
-                {
-                    selected = 5;
-                }
-                else if (e.Location.Y > 400 && e.Location.Y < 600)
-                {
-                    selected = 8;
-                }
-            }
-            bool check = false;
-            if(Places[selected].isFree)
-            {
-                check = true;
-                if (isX)
-                {
-                    board[selected] = 'X';
-                }
-                else
-                {
-                    board[selected] = '0';
-                }
-                Shape shape = new Shape(isX, Places[selected].Location);
-                Places[selected].isFree = false;
-                Places[selected].isX = isX;
-                XO.Add(shape);
-                isX = !isX;
-                Invalidate(true);
-            }
-            if (checkWinner() != 'N')
-            {
-                char res = checkWinner();
-                if((res=='X' && first == 'C') || (res=='0' && first=='R'))
-                {
-                    MessageBox.Show("YOU WON!                     ", "Victory!", MessageBoxButtons.OK);
-                }
-                else if((res=='0' && first =='C') || (res=='X' && first == 'R'))
-                {
-                    MessageBox.Show("Your opponent won!           ", "Defeat!", MessageBoxButtons.OK);
-                }
-                else
-                {
-                    MessageBox.Show("It's a tie!                  ", "Tie!", MessageBoxButtons.OK);
-                }
-                this.Close();
-            }
-            if (check)
-            {
-                if (isEasy)
-                {
-                    if (first == 'R')
+                    if (e.Location.Y > 0 && e.Location.Y < 200)
                     {
-                        Random random = new Random();
-                        int rand;
-                        while (true)
-                        {
-                            rand = random.Next(0, 9);
-                            if (board[rand] == ' ')
-                            {
-                                break;
-                            }
-                        }
-                        board[rand] = 'X';
-                        Shape shape = new Shape(isX, Places[rand].Location);
-                        Places[rand].isFree = false;
-                        Places[rand].isX = true;
-                        XO.Add(shape);
-                        isX = !isX;
+                        selected = 0;
+                    }
+                    else if (e.Location.Y > 200 && e.Location.Y < 400)
+                    {
+                        selected = 3;
+                    }
+                    else if (e.Location.Y > 400 && e.Location.Y < 600)
+                    {
+                        selected = 6;
+                    }
+                }
+                else if (e.Location.X > 200 && e.Location.X < 400)
+                {
+                    if (e.Location.Y > 0 && e.Location.Y < 200)
+                    {
+                        selected = 1;
+                    }
+                    else if (e.Location.Y > 200 && e.Location.Y < 400)
+                    {
+                        selected = 4;
+                    }
+                    else if (e.Location.Y > 400 && e.Location.Y < 600)
+                    {
+                        selected = 7;
+                    }
+                }
+                else if (e.Location.X > 400 && e.Location.X < 600)
+                {
+                    if (e.Location.Y > 0 && e.Location.Y < 200)
+                    {
+                        selected = 2;
+                    }
+                    else if (e.Location.Y > 200 && e.Location.Y < 400)
+                    {
+                        selected = 5;
+                    }
+                    else if (e.Location.Y > 400 && e.Location.Y < 600)
+                    {
+                        selected = 8;
+                    }
+                }
+                bool check = false;
+                if (Places[selected].isFree)
+                {
+                    check = true;
+                    if (isX)
+                    {
+                        board[selected] = 'X';
                     }
                     else
                     {
-                        Random random = new Random();
-                        int rand;
-                        while (true)
+                        board[selected] = '0';
+                    }
+                    Shape shape = new Shape(isX, Places[selected].Location);
+                    Places[selected].isFree = false;
+                    Places[selected].isX = isX;
+                    XO.Add(shape);
+                    isX = !isX;
+                    Invalidate(true);
+                }
+                if (checkWinner() != 'N')
+                {
+                    check = false;
+                    char res = checkWinner();
+                    if ((res == 'X' && first == 'C') || (res == '0' && first == 'R'))
+                    {
+                        MessageBox.Show("YOU WON!                     ", "Victory!", MessageBoxButtons.OK);
+                        win++;
+                        label4.Text = String.Format("{0}", win);
+                        progressBar2.Value += 20;
+                    }
+                    else if ((res == '0' && first == 'C') || (res == 'X' && first == 'R'))
+                    {
+                        MessageBox.Show("Your opponent won!           ", "Defeat!", MessageBoxButtons.OK);
+                        loss++;
+                        label2.Text = String.Format("{0}", loss);
+                        progressBar1.Value += 20;
+                    }
+                    else
+                    {
+                        MessageBox.Show("It's a tie!                  ", "Tie!", MessageBoxButtons.OK);
+                    }
+                    resetAll();
+                    if (win == 5 || loss == 5)
+                    {
+                        finalWinner();
+                    }
+                }
+                if (check)
+                {
+                    if (isEasy)
+                    {
+                        if (first == 'R')
                         {
-                            rand = random.Next(0, 9);
-                            if (board[rand] == ' ')
+                            Random random = new Random();
+                            int rand;
+                            while (true)
                             {
-                                break;
+                                rand = random.Next(0, 9);
+                                if (board[rand] == ' ')
+                                {
+                                    break;
+                                }
                             }
+                            board[rand] = 'X';
+                            Shape shape = new Shape(isX, Places[rand].Location);
+                            Places[rand].isFree = false;
+                            Places[rand].isX = true;
+                            XO.Add(shape);
+                            isX = !isX;
                         }
-                        board[rand] = '0';
-                        Shape shape = new Shape(isX, Places[rand].Location);
-                        Places[rand].isFree = false;
-                        Places[rand].isX = true;
+                        else
+                        {
+                            Random random = new Random();
+                            int rand;
+                            while (true)
+                            {
+                                rand = random.Next(0, 9);
+                                if (board[rand] == ' ')
+                                {
+                                    break;
+                                }
+                            }
+                            board[rand] = '0';
+                            Shape shape = new Shape(isX, Places[rand].Location);
+                            Places[rand].isFree = false;
+                            Places[rand].isX = true;
+                            XO.Add(shape);
+                            isX = !isX;
+                        }
+                    }
+                    else
+                    {
+                        int move = bestMove();
+                        Shape shape = new Shape(isX, Places[move].Location);
+                        Places[move].isFree = false;
+                        Places[move].isX = true;
                         XO.Add(shape);
                         isX = !isX;
                     }
+                    Invalidate(true);
+                    if (checkWinner() != 'N')
+                    {
+                        char res = checkWinner();
+                        if ((res == 'X' && first == 'C') || (res == '0' && first == 'R'))
+                        {
+                            MessageBox.Show("YOU WON!                     ", "Victory!", MessageBoxButtons.OK);
+                            win++;
+                            label4.Text = String.Format("{0}", win);
+                            progressBar2.Value += 20;
+                        }
+                        else if ((res == '0' && first == 'C') || (res == 'X' && first == 'R'))
+                        {
+                            MessageBox.Show("Your opponent won!           ", "Defeat!", MessageBoxButtons.OK);
+                            loss++;
+                            label2.Text = String.Format("{0}", loss);
+                            progressBar1.Value += 20;
+                        }
+                        else
+                        {
+                            MessageBox.Show("It's a tie!                  ", "Tie!", MessageBoxButtons.OK);
+                        }
+                        resetAll();
+                        if (win == 5 || loss == 5)
+                        {
+                            finalWinner();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void resetAll()
+        {
+
+            XO = new List<Shape>();
+            Places = new List<Place>();
+            Places.Add(new Place(new Point(100, 100),true, false));
+            Places.Add(new Place(new Point(300, 100),true, false));
+            Places.Add(new Place(new Point(500, 100),true, false));
+            Places.Add(new Place(new Point(100, 300),true, false));
+            Places.Add(new Place(new Point(300, 300),true, false));
+            Places.Add(new Place(new Point(500, 300),true, false));
+            Places.Add(new Place(new Point(100, 500),true, false));
+            Places.Add(new Place(new Point(300, 500),true, false));
+            Places.Add(new Place(new Point(500, 500),true, false));
+            board = new char[9];
+            for (int i = 0; i < 9; i++)
+            {
+                board[i] = ' ';
+            }
+            if(loss!=5 && win !=5)
+            {
+                goFirst();
+            }
+            Invalidate(true);
+        }
+
+        private void finalWinner()
+        {
+            resetAll();
+            label1.Visible = false;
+            label2.Visible = false;
+            label3.Visible = false;
+            label4.Visible = false;
+            progressBar1.Visible = false;
+            progressBar2.Visible = false;
+            textBox1.Visible = true;
+            button1.Visible = true;
+            button1.Enabled = true;
+            button2.Visible = true;
+            button2.Enabled = true;
+            if(win==5)
+            {
+                textBox1.Text = "GRAND VICTORY";
+            }
+            else
+            {
+                textBox1.Text = "GRAND LOSS";
+            }
+        }
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+           
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void progressBar1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void progressBar2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Form1 nextForm = new Form1();
+            this.Hide();
+            nextForm.ShowDialog();
+            this.Close();
+        }
+
+        private void goFirst()
+        {
+            isX = true;
+            if (first == 'R')
+            {
+                if (isEasy)
+                {
+                    Random random = new Random();
+                    int rand = random.Next(0, 9);
+                    board[rand] = 'X';
+                    Shape shape = new Shape(isX, Places[rand].Location);
+                    Places[rand].isFree = false;
+                    Places[rand].isX = true;
+                    XO.Add(shape);
+                    isX = !isX;
                 }
                 else
                 {
@@ -404,30 +586,8 @@ namespace TicTac
                     XO.Add(shape);
                     isX = !isX;
                 }
-                Invalidate(true);
-                if (checkWinner() != 'N')
-                {
-                    char res = checkWinner();
-                    if ((res == 'X' && first == 'C') || (res == '0' && first == 'R'))
-                    {
-                        MessageBox.Show("YOU WON!                     ", "Victory!", MessageBoxButtons.OK);
-                    }
-                    else if ((res == '0' && first == 'C') || (res == 'X' && first == 'R'))
-                    {
-                        MessageBox.Show("Your opponent won!           ", "Defeat!", MessageBoxButtons.OK);
-                    }
-                    else
-                    {
-                        MessageBox.Show("It's a tie!                  ", "Tie!", MessageBoxButtons.OK);
-                    }
-                    this.Close();
-                }
+                //Invalidate(true);
             }
-        }
-
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
-        {
-           
         }
     }
 }

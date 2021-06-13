@@ -8,19 +8,24 @@
     "net5.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Meto\\.nuget\\packages\\": {}
+    "C:\\Users\\jorda\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Meto\\Downloads\\TicTac\\TicTac\\TicTac\\TicTac.csproj",
+      "projectUniqueName": "C:\\Users\\jorda\\Desktop\\TicTacToe-main\\TicTac\\TicTac.csproj",
       "projectName": "TicTac",
-      "projectPath": "C:\\Users\\Meto\\Downloads\\TicTac\\TicTac\\TicTac\\TicTac.csproj",
-      "packagesPath": "C:\\Users\\Meto\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Meto\\Downloads\\TicTac\\TicTac\\TicTac\\obj\\",
+      "projectPath": "C:\\Users\\jorda\\Desktop\\TicTacToe-main\\TicTac\\TicTac.csproj",
+      "packagesPath": "C:\\Users\\jorda\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jorda\\Desktop\\TicTacToe-main\\TicTac\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Meto\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jorda\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -63,7 +68,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -20,6 +20,16 @@ namespace TicTac
             isX = false;
         }
 
+        public Place(Point location, bool isFree) : this(location)
+        {
+            this.isFree = isFree;
+        }
+
+        public Place(Point location, bool isFree, bool isX) : this(location, isFree)
+        {
+            this.isX = isX;
+        }
+
         public Place()
         {
         }
